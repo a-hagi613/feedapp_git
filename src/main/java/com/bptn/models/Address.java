@@ -3,6 +3,7 @@ package com.bptn.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -23,7 +24,7 @@ public class Address {
 
     @Column(name = "\"pincode\"")
     private String pincode;
-
+    @Id
     @Column(name = "\"usernameKey\"")
     private String usernameKey;
 

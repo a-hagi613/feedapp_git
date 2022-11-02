@@ -2,17 +2,18 @@ package com.bptn.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "\"imageMetaData\"")
 
 public class imageMetaData {
-
+    @Id
     @Column(name = "\"imageID\"")
     private String imageID;
 
-    @Column(name = "\"imageName\"")
+    @Column(name = "\"imageName ]\"")
     private String imageName;
 
     @Column(name = "\"imageSize\"")

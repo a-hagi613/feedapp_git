@@ -12,7 +12,7 @@ public class FeedAppApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(FeedAppApplication.class, args);
-        System.out.println("test");
+        System.out.println("works");
     }
 
 
