@@ -2,6 +2,7 @@ package com.bptn.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +19,7 @@ public class Role {
     @Column(name = "\"skills\"")
     private String skills;
 
+    @Id
     @Column(name = "\"usernameKey\"")
     private String usernameKey;
 

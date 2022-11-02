@@ -2,6 +2,7 @@ package com.bptn.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -35,7 +36,7 @@ public class Profile {
 
     @Column(name = "\"languages\"")
     private String languages;
-
+    @Id
     @Column(name = "\"usernameKey\"")
     private String usernameKey;
 
