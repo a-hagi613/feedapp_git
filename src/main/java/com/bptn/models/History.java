@@ -9,11 +9,11 @@ import javax.persistence.Table;
 @Table(name = "\"History\"")
 
 public class History {
-
+    @Id
     @Column(name = "\"postID\"")
     private String postID;
 
-    @Id
+
     @Column(name = "\"usernameKey\"")
     private String usernameKey;
 
@@ -83,7 +83,7 @@ public class History {
     public void setPostUpload(String postUpload) {
         this.postUpload = postUpload;
     }
-    
+
 }
 
 

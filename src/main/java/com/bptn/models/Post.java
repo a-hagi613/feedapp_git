@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "\"Post\"")
 public class Post {
-
+    @Id
     @Column(name = "\"postID\"")
     private String postID;
 
@@ -19,7 +19,7 @@ public class Post {
     @Column(name = "\"post\"")
     private String post;
 
-    @Id
+
     @Column(name = "\"usernameKey\"")
     private String usernameKey;
 
