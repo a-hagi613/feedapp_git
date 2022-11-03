@@ -8,9 +8,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "\"Address\"")
-
+//hello
 public class Address {
-
     @Column(name = "\"address\"")
     private String address;
     @Column(name = "\"city\"")

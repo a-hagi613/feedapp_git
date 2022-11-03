@@ -1,5 +1,8 @@
 package com.bptn.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -7,11 +10,11 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class FileUtils {
-
+    
     public static void main(String[] args) {
 
 //		Calling the first method:
-        ifFileExists("C:\\Users\\hagiA\\OneDrive\\Documents\\Coding\\Filesss\\src\\test3.txt");
+        ifFileExists("C:\\Users\\hagiA\\OneDrive\\Documents\\Coding\\feedapp_git\\src\\main\\java\\test.txt");
 
 //		Calling the second method:
         isFileExistsWithExceptionHandling("C:\\Users\\hagiA\\OneDrive\\Documents\\Coding\\Filesss\\src\\test3.txt");
@@ -19,12 +22,12 @@ public class FileUtils {
 //		Calling the third method:
         createFileIfNotExist("C:\\Users\\hagiA\\OneDrive\\Documents\\Coding\\Filesss\\src\\test3.txt");
 
+
     }
 
 
     //	method 1: ifFileExists
-    public static void ifFileExists(String fileName) {
-        String filePaths = fileName;
+    public static boolean ifFileExists(String filePaths) {
         File file = new File(filePaths);
         if (file.exists()) {
             System.out.println("The file exists");
@@ -32,21 +35,20 @@ public class FileUtils {
         else {
             System.out.println("The file does not exist");
         }
+        return false;
     }
 
     //	method 2: isFileExistsWithExceptionHandling
-    public static void isFileExistsWithExceptionHandling(String fileName) {
-        String filePaths = fileName;
+    public static void isFileExistsWithExceptionHandling(String filePaths) {
         File file = new File(filePaths);
         try {
-            if (file.exists()) {
-                System.out.println("The file exists, here are its contents: ");
-                @SuppressWarnings("resource")
-                Scanner scan = new Scanner(file);
-                while (scan.hasNextLine()) {
-                    System.out.println(scan.nextLine());
-                }
+            System.out.println("The file exists, here are its contents: ");
+            @SuppressWarnings("resource")
+            Scanner scan = new Scanner(file);
+            while (scan.hasNextLine()) {
+                System.out.println(scan.nextLine());
             }
+
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
             e.printStackTrace();
