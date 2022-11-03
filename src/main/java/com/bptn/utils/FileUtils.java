@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class FileUtils {
-    
+
     public static void main(String[] args) {
 
 //		Calling the first method:

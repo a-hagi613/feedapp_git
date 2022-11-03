@@ -30,7 +30,7 @@ public class UserID {
     }
 
     public UserID(String name, String emailID, String phoneNumber, String userPassword, String username) {
-        super();
+
         this.name = name;
         this.emailID = emailID;
         this.phoneNumber = phoneNumber;
