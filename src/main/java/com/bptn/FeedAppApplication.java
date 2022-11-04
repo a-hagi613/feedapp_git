@@ -2,7 +2,8 @@ package com.bptn;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 //import org.springframework.context.annotation.ComponentScan;
 
 
@@ -14,6 +15,5 @@ public class FeedAppApplication {
         SpringApplication.run(FeedAppApplication.class, args);
         System.out.println("works");
     }
-
 
 }
