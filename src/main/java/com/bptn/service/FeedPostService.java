@@ -42,14 +42,14 @@ public class FeedPostService {
     private String apiKey;
 
 
-    @Value("${api.base.url")
+    @Value("${api.base.url}")
     private String apiBaseUrl;
 
     @Autowired
     private FeedPostRepository feedPostRepository;
     private static final String POST_TYPE = "news";
 
-    // this main method calls on all the other methods mentiioned below
+    // this main method calls on all the other methods mentioned below
 
     public Post getPostFromNewsAndSavePost(FeedPostRequest feedPostRequest) {
         String url = buildApiUrl(feedPostRequest);
@@ -73,11 +73,9 @@ public class FeedPostService {
     private String generatePostID(FeedPostRequest feedPostRequest) {
 
         Random random = new Random(System.currentTimeMillis());
-        StringBuilder postIDBuilder = new StringBuilder();
-        postIDBuilder.append(random.nextInt());
-        postIDBuilder.append(Objects.hashCode(feedPostRequest.getUserName() + " " + feedPostRequest.getQueryKeyword()));
 
-        String postID = postIDBuilder.toString();
+        String postID = String.valueOf(random.nextInt()) +
+                Objects.hashCode(feedPostRequest.getUserName() + " " + feedPostRequest.getQueryKeyword());
 
         if (postID.startsWith("-")) {
             return postID.substring(1);
