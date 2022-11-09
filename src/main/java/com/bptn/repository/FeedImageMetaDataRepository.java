@@ -22,7 +22,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface FeedImageMetaDataRepository extends JpaRepository<imageMetaData, String> {
-    imageMetaData findByImageID(String imageId);
+    imageMetaData findByImageID(String imageID);
 
     List<imageMetaData> findByPostKey(String postKey);
 }

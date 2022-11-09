@@ -120,7 +120,7 @@ public class imageMetaData {
     }
 
     //	setter for resolution
-    public void SetResolution(String resolution) {
+    public void setResolution(String resolution) {
         this.resolution = resolution;
     }
 
@@ -130,7 +130,7 @@ public class imageMetaData {
     }
 
     //	setter for postKey
-    public void SetPostKey(String postKey) {
+    public void setPostKey(String postKey) {
         this.postKey = postKey;
     }
 
