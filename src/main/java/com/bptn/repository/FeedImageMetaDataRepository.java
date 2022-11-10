@@ -16,13 +16,13 @@
 
 package com.bptn.repository;
 
-import com.bptn.models.imageMetaData;
+import com.bptn.models.ImageMetaData;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface FeedImageMetaDataRepository extends JpaRepository<imageMetaData, String> {
-    imageMetaData findByImageID(String imageID);
+public interface FeedImageMetaDataRepository extends JpaRepository<ImageMetaData, String> {
+    ImageMetaData findByImageID(String imageId);
 
-    List<imageMetaData> findByPostKey(String postKey);
+    List<ImageMetaData> findByPostKey(String postKey);
 }

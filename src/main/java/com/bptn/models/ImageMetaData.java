@@ -22,14 +22,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "\"imageMetaData\"")
+@Table(name = "\"ImageMetaData\"")
 
-public class imageMetaData {
+public class ImageMetaData {
     @Id
     @Column(name = "\"imageID\"")
     private String imageID;
 
-    @Column(name = "\"imageName ]\"")
+    @Column(name = "\"imageName\"")
     private String imageName;
 
     @Column(name = "\"imageSize\"")
@@ -48,11 +48,11 @@ public class imageMetaData {
     private String postKey;
 
 
-    public imageMetaData() {
+    public ImageMetaData() {
         super();
     }
 
-    public imageMetaData(String imageID, String imageName, String imageSize, String imageFormat, String imageDate, String resolution, String postKey) {
+    public ImageMetaData(String imageID, String imageName, String imageSize, String imageFormat, String imageDate, String resolution, String postKey) {
 
 //		parameterized constructor
         this.imageID = imageID;
