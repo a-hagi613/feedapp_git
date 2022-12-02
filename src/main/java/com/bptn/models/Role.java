@@ -1,89 +1,59 @@
-/*
- *
- *  * Copyright (c) 2019. [Acme Corp]
- *  *
- *  * Permission is hereby granted, free of charge, to any person obtaining a copy
- *  * of this software and associated documentation files (the "Software"), to deal
- *  * in the Software without restriction, including without limitation the rights
- *  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  * copies of the Software, and to permit persons to whom the Software is
- *  * furnished to do so, subject to the following conditions:
- *  *
- *  * The above copyright notice and this permission notice shall be included in
- *  * all copies or substantial portions of the Software.
- *
- */
-
 package com.bptn.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import java.io.Serializable;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "\"Role\"")
+@NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")
+public class Role implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-public class Role {
+    @EmbeddedId
+    private RoleId id;
 
-    @Column(name = "\"role\"")
-    private String role;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "\"usernameKey\"", nullable = false, insertable = false, updatable = false)
+    @JsonBackReference
+    private UserID usernameKey;
 
-    @Column(name = "\"company\"")
+    @Column(name = "company", nullable = false)
     private String company;
 
-    @Column(name = "\"skills\"")
+    @Column(name = "skills", nullable = false)
     private String skills;
-
-    @Id
-    @Column(name = "\"usernameKey\"")
-    private String usernameKey;
-
-    //  constructors
-    public Role() {
-        super();
-    }
-
-    //  parameterized constructors
-    public Role(String role, String company, String skills, String usernameKey) {
-        this.role = role;
-        this.company = company;
-        this.skills = skills;
-        this.usernameKey = usernameKey;
-    }
-
-
-    //    getters
-    public String getRole() {
-        return role;
-    }
-
-    public String getCompany() {
-        return company;
-    }
 
     public String getSkills() {
         return skills;
-    }
-
-    public String getUsernameKey() {
-        return usernameKey;
-    }
-
-    //    setters
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
     }
 
     public void setSkills(String skills) {
         this.skills = skills;
     }
 
-    public void setUsernameKey(String usernameKey) {
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public UserID getUsernameKey() {
+        return usernameKey;
+    }
+
+    public void setUsernameKey(UserID usernameKey) {
         this.usernameKey = usernameKey;
+    }
+
+    public RoleId getId() {
+        return id;
+    }
+
+    public void setId(RoleId id) {
+        this.id = id;
     }
 }

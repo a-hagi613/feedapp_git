@@ -25,6 +25,7 @@ public class FeedController {
 
     @GetMapping("/")
 
+
     public ResponseEntity<String> ping() {
 
         logger.debug("Executing ping()");

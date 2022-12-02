@@ -1,123 +1,70 @@
-/*
- *
- *  * Copyright (c) 2019. [Acme Corp]
- *  *
- *  * Permission is hereby granted, free of charge, to any person obtaining a copy
- *  * of this software and associated documentation files (the "Software"), to deal
- *  * in the Software without restriction, including without limitation the rights
- *  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  * copies of the Software, and to permit persons to whom the Software is
- *  * furnished to do so, subject to the following conditions:
- *  *
- *  * The above copyright notice and this permission notice shall be included in
- *  * all copies or substantial portions of the Software.
- *
- */
-
 package com.bptn.models;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import java.io.Serializable;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "\"Address\"")
+@NamedQuery(name = "Address.findAll", query = "SELECT a FROM Address a")
+public class Address implements Serializable {
 
-public class Address {
-    @Column(name = "\"address\"")
-    private String address;
-    @Column(name = "\"city\"")
+    @EmbeddedId
+    private AddressId id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "\"usernameKey\"", nullable = false)
+    @JsonBackReference
+    private UserID usernameKey;
+
+    @Column(name = "city", nullable = false)
     private String city;
 
-    @Column(name = "\"state\"")
+    @Column(name = "state", nullable = false)
     private String state;
 
-    @Column(name = "\"country\"")
+    @Column(name = "country", nullable = false)
     private String country;
 
-    @Column(name = "\"pincode\"")
-    private String pincode;
-    @Id
-    @Column(name = "\"usernameKey\"")
-    private String usernameKey;
-
-
-    //   constructors
-    public Address() {
-        super();
-    }
-
-    //    parameterized constructors
-    public Address(String address, String city, String state, String country, String pincode, String usernameKey) {
-        this.address = address;
-        this.city = city;
-        this.state = state;
-        this.country = country;
-        this.pincode = pincode;
-        this.usernameKey = usernameKey;
-    }
-
-
-    //    getter for address
-    public String getAddress() {
-        return this.address;
-    }
-
-    //    setter for address
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    //    getter for city
-    public String getCity() {
-        return this.city;
-    }
-
-    //    setter for city
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    //    getter for state
-    public String getState() {
-        return this.state;
-    }
-
-    //    setter for state
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    //    getter for country
     public String getCountry() {
-        return this.country;
+        return country;
     }
 
-    //    setter for country
     public void setCountry(String country) {
         this.country = country;
     }
 
-    //    getter for pincode
-    public String getPincode() {
-        return this.pincode;
+    public String getState() {
+        return state;
     }
 
-    //    setter for pincode
-    public void setPincode(String pincode) {
-        this.pincode = pincode;
+    public void setState(String state) {
+        this.state = state;
     }
 
-    //    getter for usernameKey
-    public String getUsernameKey() {
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public UserID getUsernameKey() {
         return usernameKey;
     }
 
-    //    setter for usernameKey
-    public void setUsernameKey(String usernameKey) {
+    public void setUsernameKey(UserID usernameKey) {
         this.usernameKey = usernameKey;
     }
 
+    public AddressId getId() {
+        return id;
+    }
+
+    public void setId(AddressId id) {
+        this.id = id;
+    }
 }

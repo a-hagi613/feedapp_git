@@ -1,109 +1,99 @@
-/*
- *
- *  * Copyright (c) 2019. [Acme Corp]
- *  *
- *  * Permission is hereby granted, free of charge, to any person obtaining a copy
- *  * of this software and associated documentation files (the "Software"), to deal
- *  * in the Software without restriction, including without limitation the rights
- *  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  * copies of the Software, and to permit persons to whom the Software is
- *  * furnished to do so, subject to the following conditions:
- *  *
- *  * The above copyright notice and this permission notice shall be included in
- *  * all copies or substantial portions of the Software.
- *
- */
-
 package com.bptn.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import java.io.Serializable;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "\"UserID\"")
-public class UserID {
+@NamedQuery(name = "UserID.findAll", query = "SELECT u FROM UserID u")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
+public class UserID implements Serializable {
 
-    @Column(name = "\"name\"")
-    private String name;
-
-    @Column(name = "\"emailID\"")
-    private String emailID;
-
-    @Column(name = "\"phoneNumber\"")
-    private String phoneNumber;
-
-    @Column(name = "\"userPassword\"")
-    private String userPassword;
+    private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "\"username\"")
+    @Column(name = "username", nullable = false)
     private String username;
 
-    //    constructors
-    public UserID() {
-        super();
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "\"emailID\"", nullable = false)
+    private String emailID;
+
+    @Column(name = "\"phoneNumber\"", nullable = false)
+    private String phoneNumber;
+
+    @OneToMany(mappedBy = "usernameKey", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<Role> roles = new LinkedHashSet<>();
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userID")
+    @JsonManagedReference
+    private Profile profile;
+
+    @OneToMany(mappedBy = "usernameKey", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<Address> addresses = new LinkedHashSet<>();
+
+    public Set<Address> getAddresses() {
+        return addresses;
     }
 
-    public UserID(String name, String emailID, String phoneNumber, String userPassword, String username) {
-
-        this.name = name;
-        this.emailID = emailID;
-        this.phoneNumber = phoneNumber;
-        this.userPassword = userPassword;
-        this.username = username;
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
     }
 
-    //	getter for name
-    public String getName() {
-        return this.name;
+    public Profile getProfile() {
+        return profile;
     }
 
-    //	setter for name
-    public void setName(String name) {
-        this.name = name;
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
-    //	getter for emailId
-    public String getEmailID() {
-        return this.emailID;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    //	setter for emailID
-    public void setemailID(String emailID) {
-        this.emailID = emailID;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
-    //	getter for phoneNumber
     public String getPhoneNumber() {
-        return this.phoneNumber;
+        return phoneNumber;
     }
 
-    //	setter for phoneNumber
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    // getter for userPassword
-    public String getUserPassword() {
-        return this.userPassword;
+    public String getEmailID() {
+        return emailID;
     }
 
-    //	setter for phoneNumber
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setEmailID(String emailID) {
+        this.emailID = emailID;
     }
 
-    // getter for username
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getUsername() {
-        return this.username;
+        return username;
     }
 
-    //		setter for username
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String id) {
+        this.username = id;
     }
-
-
 }

@@ -1,161 +1,154 @@
-/*
- *
- *  * Copyright (c) 2019. [Acme Corp]
- *  *
- *  * Permission is hereby granted, free of charge, to any person obtaining a copy
- *  * of this software and associated documentation files (the "Software"), to deal
- *  * in the Software without restriction, including without limitation the rights
- *  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  * copies of the Software, and to permit persons to whom the Software is
- *  * furnished to do so, subject to the following conditions:
- *  *
- *  * The above copyright notice and this permission notice shall be included in
- *  * all copies or substantial portions of the Software.
- *
- */
-
 package com.bptn.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import java.io.Serializable;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "\"Profile\"")
+@NamedQuery(name = "Profile.findAll", query = "SELECT p FROM Profile p")
+public class Profile implements Serializable {
 
-public class Profile {
+    @Id
+    @Column(name = "\"usernameKey\"", nullable = false)
+    private String username;
 
-    @Column(name = "\"position\"")
+    @MapsId
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "\"usernameKey\"", nullable = false)
+    @JsonBackReference
+    private UserID userID;
+
+    @Column(name = "\"position\"", nullable = false)
     private String position;
 
-    @Column(name = "\"company\"")
+    @Column(name = "company", nullable = false)
     private String company;
 
-    @Column(name = "\"companyAddresss\"")
-    private String companyAddresss;
+    @Column(name = "\"companyAddress\"", nullable = false)
+    private String companyAddress;
 
-    @Column(name = "\"interests\"")
+    @Column(name = "interests", nullable = false)
     private String interests;
 
-    @Column(name = "\"experience\"")
+    @Column(name = "experience", nullable = false)
     private String experience;
 
-    @Column(name = "\"education\"")
+    @Column(name = "education", nullable = false)
     private String education;
 
-    @Column(name = "\"certification\"")
+    @Column(name = "certification", nullable = false)
     private String certification;
 
-    @Column(name = "\"skills\"")
+    @Column(name = "skills", nullable = false)
     private String skills;
 
-    @Column(name = "\"languages\"")
+    @Column(name = "languages", nullable = false)
     private String languages;
-    @Id
-    @Column(name = "\"usernameKey\"")
-    private String usernameKey;
-
-
-    //    constructors
-    public Profile() {
-        super();
-    }
-
-    //  parameterized constructors
-    public Profile(String position, String company, String companyAddresss, String interests, String experience, String education, String certification, String skills, String languages, String usernameKey) {
-        this.position = position;
-        this.company = company;
-        this.companyAddresss = companyAddresss;
-        this.interests = interests;
-        this.experience = experience;
-        this.education = education;
-        this.certification = certification;
-        this.skills = skills;
-        this.languages = languages;
-        this.usernameKey = usernameKey;
-    }
-
-    //    getters
-    public String getPosition() {
-        return position;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public String getCompanyAddresss() {
-        return companyAddresss;
-    }
-
-    public String getInterests() {
-        return interests;
-    }
-
-    public String getExperience() {
-        return experience;
-    }
-
-    public String getEducation() {
-        return education;
-    }
-
-    public String getCertification() {
-        return certification;
-    }
-
-    public String getSkills() {
-        return skills;
-    }
 
     public String getLanguages() {
         return languages;
-    }
-
-    public String getUsernameKey() {
-        return usernameKey;
-    }
-
-//    setters
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public void setCompanyAddresss(String companyAddresss) {
-        this.companyAddresss = companyAddresss;
-    }
-
-    public void setInterests(String interests) {
-        this.interests = interests;
-    }
-
-    public void setExperience(String experience) {
-        this.experience = experience;
-    }
-
-    public void setEducation(String education) {
-        this.education = education;
-    }
-
-    public void setCertification(String certification) {
-        this.certification = certification;
-    }
-
-    public void setSkills(String skills) {
-        this.skills = skills;
     }
 
     public void setLanguages(String languages) {
         this.languages = languages;
     }
 
-    public void setUsernameKey(String usernameKey) {
-        this.usernameKey = usernameKey;
+    public String getSkills() {
+        return skills;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
+
+    public String getCertification() {
+        return certification;
+    }
+
+    public void setCertification(String certification) {
+        this.certification = certification;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public String getInterests() {
+        return interests;
+    }
+
+    public void setInterests(String interests) {
+        this.interests = interests;
+    }
+
+    public String getCompanyAddress() {
+        return companyAddress;
+    }
+
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public UserID getUserID() {
+        return userID;
+    }
+
+    public void setUserID(UserID userID) {
+        this.userID = userID;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String id) {
+        this.username = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "username='" + username + '\'' +
+                ", userID=" + userID +
+                ", position='" + position + '\'' +
+                ", company='" + company + '\'' +
+                ", companyAddress='" + companyAddress + '\'' +
+                ", interests='" + interests + '\'' +
+                ", experience='" + experience + '\'' +
+                ", education='" + education + '\'' +
+                ", certification='" + certification + '\'' +
+                ", skills='" + skills + '\'' +
+                ", languages='" + languages + '\'' +
+                '}';
     }
 }
