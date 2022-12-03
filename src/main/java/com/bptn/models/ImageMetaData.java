@@ -1,138 +1,100 @@
-/*
- *
- *  * Copyright (c) 2019. [Acme Corp]
- *  *
- *  * Permission is hereby granted, free of charge, to any person obtaining a copy
- *  * of this software and associated documentation files (the "Software"), to deal
- *  * in the Software without restriction, including without limitation the rights
- *  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  * copies of the Software, and to permit persons to whom the Software is
- *  * furnished to do so, subject to the following conditions:
- *  *
- *  * The above copyright notice and this permission notice shall be included in
- *  * all copies or substantial portions of the Software.
- *
- */
-
 package com.bptn.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import java.io.Serializable;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "\"ImageMetaData\"")
+@NamedQuery(name = "ImageMetaData.findAll", query = "SELECT i FROM ImageMetaData i")
+public class ImageMetaData implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-public class ImageMetaData {
+
     @Id
-    @Column(name = "\"imageID\"")
-    private String imageID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "\"imageID\"", nullable = false)
+    private Long id;
 
-    @Column(name = "\"imageName\"")
+
+    @Column(name = "\"imageName\"", nullable = false)
     private String imageName;
 
-    @Column(name = "\"imageSize\"")
+
+    @Column(name = "\"imageSize\"", nullable = false)
     private String imageSize;
 
-    @Column(name = "\"imageFormat\"")
+
+    @Column(name = "\"imageFormat\"", nullable = false)
     private String imageFormat;
 
-    @Column(name = "\"imageDate\"")
+
+    @Column(name = "\"imageDate\"", nullable = false)
     private String imageDate;
 
-    @Column(name = "\"resolution\"")
+
+    @Column(name = "resolution", nullable = false)
     private String resolution;
 
-    @Column(name = "\"postKey\"")
-    private String postKey;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "\"postKey\"", nullable = false)
+    @JsonBackReference
+    private Post postKey;
 
-
-    public ImageMetaData() {
-        super();
+    public Post getPostKey() {
+        return postKey;
     }
 
-    public ImageMetaData(String imageID, String imageName, String imageSize, String imageFormat, String imageDate, String resolution, String postKey) {
-
-//		parameterized constructor
-        this.imageID = imageID;
-        this.imageName = imageName;
-        this.imageSize = imageSize;
-        this.imageFormat = imageFormat;
-        this.imageDate = imageDate;
-        this.resolution = resolution;
+    public void setPostKey(Post postKey) {
         this.postKey = postKey;
     }
 
-    //	getter for imageID
-    public String getImageID() {
-        return this.imageID;
-    }
-
-    //	setter for ImageID
-    public void setImageID(String imageID) {
-        this.imageID = imageID;
-    }
-
-    //	getter for imageName
-    public String getImageName() {
-        return this.imageName;
-    }
-
-    //	setter for imageName
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
-    }
-
-    //	getter for imageSize
-    public String getImageSize() {
-        return this.imageSize;
-    }
-
-    //	setter for imageSize
-    public void setImageSize(String imageSize) {
-        this.imageSize = imageSize;
-    }
-
-    //	getter for imageFormat
-    public String getImageFormat() {
-        return this.imageFormat;
-    }
-
-    //	setter for imageFormat
-    public void setImageFormat(String imageFormat) {
-        this.imageFormat = imageFormat;
-    }
-
-    //	getter for imageDate
-    public String getImageDate() {
-        return this.imageDate;
-    }
-
-    //	setter for imageDate
-    public void setImageDate(String imageDate) {
-        this.imageDate = imageDate;
-    }
-
-    //	getter for resolution
     public String getResolution() {
-        return this.resolution;
+        return resolution;
     }
 
-    //	setter for resolution
     public void setResolution(String resolution) {
         this.resolution = resolution;
     }
 
-    //	getter for postKey
-    public String getPostKey() {
-        return this.postKey;
+    public String getImageDate() {
+        return imageDate;
     }
 
-    //	setter for postKey
-    public void setPostKey(String postKey) {
-        this.postKey = postKey;
+    public void setImageDate(String imageDate) {
+        this.imageDate = imageDate;
     }
 
+    public String getImageFormat() {
+        return imageFormat;
+    }
 
+    public void setImageFormat(String imageFormat) {
+        this.imageFormat = imageFormat;
+    }
+
+    public String getImageSize() {
+        return imageSize;
+    }
+
+    public void setImageSize(String imageSize) {
+        this.imageSize = imageSize;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

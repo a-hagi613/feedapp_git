@@ -1,98 +1,75 @@
-/*
- *
- *  * Copyright (c) 2019. [Acme Corp]
- *  *
- *  * Permission is hereby granted, free of charge, to any person obtaining a copy
- *  * of this software and associated documentation files (the "Software"), to deal
- *  * in the Software without restriction, including without limitation the rights
- *  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  * copies of the Software, and to permit persons to whom the Software is
- *  * furnished to do so, subject to the following conditions:
- *  *
- *  * The above copyright notice and this permission notice shall be included in
- *  * all copies or substantial portions of the Software.
- *
- */
-
 package com.bptn.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "\"Post\"")
-public class Post {
-    @Id
-    @Column(name = "\"postID\"")
-    private String postID;
+@NamedQuery(name = "Post.findAll", query = "SELECT p FROM Post p")
+public class Post implements Serializable {
 
-    @Column(name = "\"postType\"")
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "\"postID\"", nullable = false)
+    private Long id;
+
+    @Column(name = "\"postType\"", nullable = false)
     private String postType;
 
-    @Column(name = "\"post\"")
+
+    @Column(name = "post", nullable = false)
     private String post;
 
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "\"usernameKey\"", nullable = false)
+    private String usernameKey;
 
-    @Column(name = "\"usernameKey\"")
-    private String username;
+    @OneToMany(mappedBy = "postKey")
+    @JsonManagedReference
+    private Set<ImageMetaData> imageMetaData = new LinkedHashSet<>();
 
-//    constructors
-
-    public Post() {
-        super();
+    public Set<ImageMetaData> getImageMetaData() {
+        return imageMetaData;
     }
 
-//    parameterized constructors
-
-    public Post(String postID, String postType, String post, String username) {
-        this.postID = postID;
-        this.postType = postType;
-        this.post = post;
-        this.username = username;
+    public void setImageMetaData(Set<ImageMetaData> imageMetaData) {
+        this.imageMetaData = imageMetaData;
     }
 
-    //    getter for postID
-    public String getPostID() {
-        return this.postID;
+    public String getUsernameKey() {
+        return usernameKey;
     }
 
-    //    setter for postID
-    public void setPostID(String postID) {
-        this.postID = postID;
+    public void setUsernameKey(String usernameKey) {
+        this.usernameKey = usernameKey;
     }
 
-    //    getter for postType
-    public String getPostType() {
-        return this.postType;
-    }
-
-    //    setter for postType
-    public void setPostType(String postType) {
-        this.postType = postType;
-    }
-
-    //    getter for post
     public String getPost() {
-        return this.post;
+        return post;
     }
 
-    //    setter for post
     public void setPost(String post) {
         this.post = post;
     }
 
-    //    getter for usernameKey
-    public String getUsername() {
-        return this.username;
+    public String getPostType() {
+        return postType;
     }
 
-    //    setter for usernameKey
-    public void setUsernameKey(String username) {
-        this.username = username;
+    public void setPostType(String postType) {
+        this.postType = postType;
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

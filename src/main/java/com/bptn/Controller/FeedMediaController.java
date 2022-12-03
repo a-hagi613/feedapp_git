@@ -1,25 +1,12 @@
-/*
- *
- *  * Copyright (c) 2019. [Acme Corp]
- *  *
- *  * Permission is hereby granted, free of charge, to any person obtaining a copy
- *  * of this software and associated documentation files (the "Software"), to deal
- *  * in the Software without restriction, including without limitation the rights
- *  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  * copies of the Software, and to permit persons to whom the Software is
- *  * furnished to do so, subject to the following conditions:
- *  *
- *  * The above copyright notice and this permission notice shall be included in
- *  * all copies or substantial portions of the Software.
- *
- */
-
 package com.bptn.Controller;
 
 import com.bptn.exceptions.InvalidImageMetaDataException;
+import com.bptn.exceptions.InvalidPostException;
 import com.bptn.models.ImageMetaData;
+import com.bptn.models.Post;
 import com.bptn.request.FeedMediaRequest;
 import com.bptn.service.FeedMediaService;
+import com.bptn.service.FeedService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -42,44 +30,57 @@ public class FeedMediaController {
     @Autowired
     private FeedMediaService feedMediaService;
 
+    @Autowired
+    private FeedService feedService;
+
     @GetMapping(value = "/image/metadata/{postKey}")
-    public ResponseEntity<Object> getImageMediaByPostKey(@PathVariable("postKey") String postkey) {
+    public ResponseEntity<Object> getImageMediaByPostKey(@PathVariable("postKey") long postKey) {
 
         LOGGER.debug("Executing getImageMediaByPostKey API");
-
         List<ImageMetaData> imageMetaDataList;
-
         try {
-            imageMetaDataList = feedMediaService.getImageMediaByPostKey(postkey);
-        } catch (InvalidImageMetaDataException e) {
-            LOGGER.error("Unable to find image metadata by postkey, cause{}", e.getMessage());
+            imageMetaDataList = feedMediaService.getImageMediaByPostKey(postKey);
+        } catch (Exception e) {
+            LOGGER.error("Unable to find Image Metadata by postkey, cause={}", e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
         return new ResponseEntity<>(imageMetaDataList, HttpStatus.OK);
-
     }
 
+
     @GetMapping(value = "/imageInfo/metadata/{imageID}")
-    public ResponseEntity<Object> getImageMediaByImageId(@PathVariable("imageID") String imageID) {
-        LOGGER.debug("Executing getImageMediaByImageId API ");
-
+    public ResponseEntity<Object> getPostsImageMediaByImageId(@PathVariable("imageID") long imageID) {
+        LOGGER.debug("Executing getPostsImageMediaByImageId API");
         ImageMetaData imageMetaData;
-
         try {
-            imageMetaData = feedMediaService.getPostsImageMediaByImageID(imageID);
-        } catch (InvalidImageMetaDataException e) {
-            LOGGER.error("Unable to find image metadata by imageID, cause{}", e.getMessage());
-            return ResponseEntity.badRequest().body(e.getMessage());
+            imageMetaData = feedMediaService.getPostsImageMediaByImageId(imageID);
+        } catch (InvalidImageMetaDataException exception) {
+            LOGGER.error("Unable to find image metadata by imageId, cause={}", exception.getCause());
+            return ResponseEntity.badRequest().body(exception.getMessage());
         }
         return new ResponseEntity<>(imageMetaData, HttpStatus.OK);
     }
 
 
-    @PostMapping(value = "image/metadata", consumes = MediaType.APPLICATION_JSON_VALUE, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Object> createNewImage(@RequestBody FeedMediaRequest feedMediaRequest) {
+    @PostMapping(value = "/image/metadata", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Object> createNewImage(@RequestBody FeedMediaRequest feedMediaRequest) throws InvalidPostException {
         LOGGER.debug("Executing createNewImage API");
-        ImageMetaData imageMetaData = feedMediaService.createNewImage(feedMediaRequest);
+        ImageMetaData imageMetaData = requestToEntity(feedMediaRequest);
+        imageMetaData = feedMediaService.createNewImage(imageMetaData);
         return new ResponseEntity<>(imageMetaData, HttpStatus.OK);
+    }
+
+    private ImageMetaData requestToEntity(FeedMediaRequest feedMediaRequest) throws InvalidPostException {
+        ImageMetaData imageMetaData = new ImageMetaData();
+        imageMetaData.setImageDate(LocalDate.now() + "");
+        imageMetaData.setImageFormat(feedMediaRequest.getImageFormat());
+        imageMetaData.setImageName(feedMediaRequest.getImageName());
+        imageMetaData.setImageSize(feedMediaRequest.getImageSize());
+        imageMetaData.setResolution(feedMediaRequest.getResolution());
+        Post post = feedService.getPostsByPostId(Long.parseLong(feedMediaRequest.getPostKey()));
+        imageMetaData.setPostKey(post);
+        return imageMetaData;
     }
 
 
