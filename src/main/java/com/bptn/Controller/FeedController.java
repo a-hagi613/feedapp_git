@@ -1,4 +1,20 @@
-package com.bptn.Controller;
+/*
+ *
+ *  * Copyright (c) 2019. [Acme Corp]
+ *  *
+ *  * Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  * of this software and associated documentation files (the "Software"), to deal
+ *  * in the Software without restriction, including without limitation the rights
+ *  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  * copies of the Software, and to permit persons to whom the Software is
+ *  * furnished to do so, subject to the following conditions:
+ *  *
+ *  * The above copyright notice and this permission notice shall be included in
+ *  * all copies or substantial portions of the Software.
+ *
+ */
+
+package com.bptn.models.Controller;
 
 import com.bptn.exceptions.InvalidPostException;
 import com.bptn.exceptions.InvalidUserNameException;
@@ -74,7 +90,7 @@ public class FeedController {
     @GetMapping(value = "/Posts/postType/{postType}")
     public ResponseEntity<Object> getPostsByPostType(@PathVariable("postType") String postType) {
         LOGGER.debug("Executing getPostsByPostType API");
-        Post feed;
+        List<Post> feed;
         try {
             feed = feedService.getPostsByPostType(postType);
         } catch (InvalidPostException e) {

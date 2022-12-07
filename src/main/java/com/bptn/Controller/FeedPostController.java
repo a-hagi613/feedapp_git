@@ -14,7 +14,7 @@
  *
  */
 
-package com.bptn.Controller;
+package com.bptn.models.Controller;
 
 
 import com.bptn.exceptions.InvalidRequestException;
